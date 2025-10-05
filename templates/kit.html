@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIT - Exoplanet Search and Space Exploration</title>
+    <link rel="stylesheet" href="/static/kit.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-rocket"></i>
+                <span>KIT</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Search Planets</a></li>
+                <li><a href="#explore">Exploration</a></li>
+                <li><a href="#about">About Project</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">Explore</span>
+                <span class="title-line">the Universe</span>
+                <span class="title-line">with KIT</span>
+            </h1>
+            <p class="hero-subtitle">Discover the mysteries of exoplanets and explore the depths of space with cutting-edge technology</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('search')">
+                    <i class="fas fa-rocket"></i>
+                    Find Planets
+                </button>
+                <button class="btn btn-secondary" onclick="scrollToSection('explore')">
+                    <i class="fas fa-compass"></i>
+                    Explore
+                </button>
+            </div>
+        </div>
+        <div class="hero-whale">
+            <svg class="animated-whale" viewBox="0 0 200 200" width="300" height="300">
+                <defs>
+                    <linearGradient id="whaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#357abd;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Background circle -->
+                <circle cx="100" cy="100" r="90" fill="url(#whaleGradient)" filter="url(#glow)" class="whale-circle"/>
+                
+                <!-- Whale body -->
+                <path d="M50 120 C40 120, 35 115, 40 110 C50 100, 70 95, 90 100 C110 105, 130 110, 140 120 C145 125, 140 130, 130 135 C120 140, 100 145, 80 140 C60 135, 50 125, 50 120 Z" 
+                      fill="white" 
+                      class="whale-body"/>
+                
+                <!-- Whale tail -->
+                <path d="M130 120 C135 115, 145 115, 150 120 C155 125, 150 130, 145 135 C140 140, 135 135, 130 130 Z" 
+                      fill="white" 
+                      class="whale-tail"/>
+                
+                <!-- Whale tail fin -->
+                <path d="M145 115 C150 110, 160 110, 165 115 C170 120, 165 125, 160 130 C155 135, 150 130, 145 125 Z" 
+                      fill="white" 
+                      class="whale-tail-fin"/>
+                
+                <!-- Eye -->
+                <circle cx="75" cy="115" r="3" fill="url(#whaleGradient)" class="whale-eye"/>
+                
+                <!-- Water bubbles -->
+                <circle cx="60" cy="80" r="2" fill="rgba(255,255,255,0.6)" class="bubble bubble1"/>
+                <circle cx="70" cy="75" r="1.5" fill="rgba(255,255,255,0.4)" class="bubble bubble2"/>
+                <circle cx="65" cy="70" r="1" fill="rgba(255,255,255,0.3)" class="bubble bubble3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="search-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-globe"></i>
+                Exoplanet Search
+            </h2>
+            <div class="search-container">
+                <div class="search-form">
+                    <form action="#search", method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button onclick="searchExoplanets()" class="search-btn">
+                        <i class="fas fa-rocket"></i>
+                        Search
+                    </button>
+                    </form>
+                </div>
+            </div>
+            {% if result %}
+            <div id="searchResults" class="search-results">{{ result }}</div>
+            {% endif %}
+            {% if error %}
+            <div id="searchResults" class="search-results" style="color:red;">{{ error }}</div>
+            {% endif%}
+        </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-rocket"></i>
+                About KIT Project
+            </h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>KIT is a project for NASA Space App Challenge, created by a team of 5 people. We developed artificial intelligence for exoplanet search and space exploration, opening new horizons in understanding the Universe.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>5</h3>
+                            <p>Team Members</p>
+                        </div>
+                        <div class="stat">
+                            <h3>AI</h3>
+                            <p>Artificial Intelligence</p>
+                        </div>
+                        <div class="stat">
+                            <h3>NASA</h3>
+                            <p>Space App Challenge</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="space-station"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-rocket"></i>
+                    <span>KIT</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#search">Search</a>
+                    <a href="#explore">Exploration</a>
+                    <a href="#about">About Project</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KIT. All rights reserved. Exploring space together.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/kit.js"></script>
+</body>
+</html>
